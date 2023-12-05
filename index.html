@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz connect demo</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<script>
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    let t = document.getElementById('likert').value
+    const canvas = document.getElementById('chart')
+    const ctx = canvas.getContext('2d');
+    const [ w , h ] = [ canvas.clientWidth , canvas.clientHeight ];
+    const r = 500;
+   
+    const gradient = ctx.createRadialGradient(w, h*1.2, 0, w, h, r * t);
+    gradient.addColorStop(0.0 , 'rgb(255,0,0)');
+    gradient.addColorStop(1 , 'rgb(0,255,0)');
+
+    const data = {
+      backgroundColor: [gradient,gradient,gradient,gradient,gradient],
+      labels: ['High', 'High/Mid', 'Mid', 'Low/Mid', 'Low'],
+      datasets: [
+        {
+          label: 'Question 1',
+          backgroundColor: gradient,
+          data: [5, 4, 3, 2, 1]
+        }
+      ]
+    };
+    
+
+    const options = {
+      tooltips: {
+        mode: 'label'
+      },
+
+    };
+
+    const myRadarChart = new Chart(ctx, {
+      type: 'polarArea',
+      data,
+      options
+    });
+    function calc(){
+    chart.update()
+}
+});
+
+
+</script>
+</head>
+<body>
+    <h2>No real logic yet, just proving I can do this. The survey question is linked to the chart below.</h2>
+
+<p>Likert Scale Survey Questions</p>
+
+<form action="#" >
+  <label for="likert">Sample survey question</label>
+  <select id="likert" name="likert"> 
+    <option value="4">&#128077; &#128077;</option>
+    <option value="3">&#128077;</option>
+    <option value="2">&#128077; &#128078;</option>
+    <option value="1">&#128078;</option>
+    <option value="0">&#128078; &#128078;</option>
+</select>
+  <input  type="submit" onclick="calc()">
+</form>
+
+
+<div>
+ <canvas id="chart" width="${width}" height="${width}" />
+</div>
+</body>
+
+</html>
